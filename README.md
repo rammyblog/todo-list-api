@@ -55,8 +55,12 @@ $ npm install
 ## Running the app
 
 ```bash
+# Copy the env files
+$ cp .env.test .env
+
 # Start the db in docker and migrate prisma
 $ db:test:restart
+
 # development
 $ npm run start
 
@@ -70,7 +74,7 @@ $ npm run start:prod
 ## Testing
 
 ```bash
-    $ npm run test
+$ npm run test
 ```
 
 ## API Documentation
