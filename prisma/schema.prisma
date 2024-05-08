@@ -1,0 +1,57 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  email String @unique
+  hash String
+  deletedAt DateTime? 
+  firstName String
+  lastName String?
+  todos Todo[]
+
+  @@map("users")
+  
+}
+
+
+model Todo{
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name String
+  deletedAt DateTime? 
+  userId Int 
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tasks Task[]
+
+  @@map("todos")
+  
+}
+
+model Task{
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime? 
+  description String?
+  completed Boolean
+  deadline DateTime
+  todoId Int
+  todo Todo @relation(fields: [todoId], references: [id], onDelete: Cascade)
+
+
+@@map("tasks")
+
+}
